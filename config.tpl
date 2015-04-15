@@ -57,14 +57,16 @@ $(function() {
 
     // サンドボックスの使用
     $('input[name=use_sandbox]').change(function() {
+        // v2.13.2以下とv2.13.3を無理やり共存
+        var $use_sandbox = $.fn.jquery < 1.9 ? $(this).attr('checked') : $(this).prop('checked');
         if ($('input[name=account_type]:checked').val() == <!--{$smarty.const.PAYPAL_ACCOUNT_TYPE_STANDARD}-->) {
-            if ($(this).attr('checked')) {
+            if ($use_sandbox) {
                 $('input[name=link_url]').val('<!--{$smarty.const.PAYPAL_SANDBOX_LINK_URL}-->');
             } else {
                 $('input[name=link_url]').val('<!--{$smarty.const.PAYPAL_LINK_URL}-->');
             }
         } else {
-            if ($(this).attr('checked')) {
+            if ($use_sandbox) {
                 $('input[name=link_url]').val('<!--{$smarty.const.PAYPAL_SANDBOX_PAYMENTS_PLUS_LINK_URL}-->');
             } else {
                 $('input[name=link_url]').val('<!--{$smarty.const.PAYPAL_PAYMENTS_PLUS_LINK_URL}-->');
